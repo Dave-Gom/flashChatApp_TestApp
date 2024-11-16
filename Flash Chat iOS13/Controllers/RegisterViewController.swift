@@ -19,9 +19,6 @@ class RegisterViewController: UIViewController {
     
     @IBAction func registerPressed(_ sender: UIButton) {
         
-        
-        
-        
         if let email = emailTextfield.text, let password = passwordTextfield.text{
             Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                 
@@ -31,7 +28,7 @@ class RegisterViewController: UIViewController {
                 }
                 else{
                     //navigate to the chatView controller
-                    self.performSegue(withIdentifier: "RegisterToChat", sender: self)
+                    self.performSegue(withIdentifier: K.registerSegue, sender: self)
                     
                 }
               
