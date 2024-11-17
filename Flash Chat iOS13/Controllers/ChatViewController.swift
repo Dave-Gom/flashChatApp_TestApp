@@ -22,7 +22,6 @@ class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "App de chats";
         tableView.dataSource = self;
         navigationItem.hidesBackButton = true;
         
