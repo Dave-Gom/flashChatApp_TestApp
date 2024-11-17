@@ -335,6 +335,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="App de chats" id="Q5u-eL-Bgp">
                         <barButtonItem key="rightBarButtonItem" title="Log Out" id="vvJ-d9-o5b">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="logOutPressed:" destination="lwd-AH-u8E" id="OoB-ID-djc"/>
                             </connections>
@@ -359,8 +360,8 @@
                         <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="BrandBlue"/>
-                        <color key="tintColor" name="BrandBlue"/>
-                        <color key="barTintColor" name="BrandBlue"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" name="BrandLightPurple"/>
                         </textAttributes>
