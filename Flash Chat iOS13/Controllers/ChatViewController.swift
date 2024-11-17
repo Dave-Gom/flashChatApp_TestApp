@@ -54,6 +54,9 @@ class ChatViewController: UIViewController {
                             
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
+                                let indexpath = IndexPath(row: self.messages.count-1, section: 0)
+                                
+                                self.tableView.scrollToRow(at: indexpath, at: .top, animated: true)
                             }
                             
                         }
@@ -70,13 +73,16 @@ class ChatViewController: UIViewController {
         
         if let messageBody = messageTextfield.text,
            let messageSender = Auth.auth().currentUser?.email{
-            messageTextfield.text = ""
+            
             db.collection(K.FStore.collectionName).addDocument(data: [K.FStore.senderField: messageSender, K.FStore.bodyField: messageBody, K.FStore.dateField: Date().timeIntervalSince1970]) { error in
                 if let e = error{
                     print ("Error adding document: \(e)");
                 }
                 else{
                     print ("dato agregado")
+                    DispatchQueue.main.async{
+                        self.messageTextfield.text = ""
+                    }
                 }
             }
         }
