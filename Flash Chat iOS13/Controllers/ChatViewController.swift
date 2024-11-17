@@ -15,12 +15,9 @@ class ChatViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextfield: UITextField!
+    let db = Firestore.firestore()
     
-    var messages: [Message] = [
-        Message(sender: "1@2.com", body: "Hola"),
-        Message(sender: "1@2.com", body: "Hola"),
-        Message(sender: "1@2.com", body: "Hola")
-    ]
+    var messages: [Message] = []
     
     
     override func viewDidLoad() {
@@ -30,9 +27,61 @@ class ChatViewController: UIViewController {
         navigationItem.hidesBackButton = true;
         
         tableView.register(UINib(nibName: K.cellNiBName, bundle: nil), forCellReuseIdentifier: K.reusableCell)
+        
+        loadMessages()
     }
     
+    
+    func loadMessages(){
+        
+        
+        
+        db.collection(K.FStore.collectionName).order(by: K.FStore.dateField).addSnapshotListener {
+            (querySnapshot, error) in
+            if let e = error{
+                print("hubo un error optieniendo los datos: \(e)")
+                
+            }
+            else{
+                self.messages = [];
+
+                if let snapShotDocument = querySnapshot?.documents {
+                    for doc in snapShotDocument{
+                        let data = doc.data()
+                        if let sender = data[K.FStore.senderField] as? String, let messageBody = data[K.FStore.bodyField] as? String{
+                            let newMessage = Message(sender: sender, body: messageBody);
+                            self.messages.append(newMessage);
+                            
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                            
+                        }
+                    }
+                }
+                    
+                
+            }
+        }
+    }
+    
+    
     @IBAction func sendPressed(_ sender: UIButton) {
+        
+        if let messageBody = messageTextfield.text,
+           let messageSender = Auth.auth().currentUser?.email{
+            messageTextfield.text = ""
+            db.collection(K.FStore.collectionName).addDocument(data: [K.FStore.senderField: messageSender, K.FStore.bodyField: messageBody, K.FStore.dateField: Date().timeIntervalSince1970]) { error in
+                if let e = error{
+                    print ("Error adding document: \(e)");
+                }
+                else{
+                    print ("dato agregado")
+                }
+            }
+        }
+        
+        
     }
     
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {

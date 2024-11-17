@@ -13,4 +13,11 @@ struct K {
     static let reusableCell = "ReusableCell"
     static let cellNiBName = "MessageCell"
     
+    
+    struct FStore {
+        static let collectionName = "messages"
+        static let senderField = "sender"
+        static let bodyField = "body"
+        static let dateField = "date"
+    }
 }
